@@ -1,0 +1,26 @@
+.MainContainer  {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ThemeOptions_container {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+}
+
+.TweetCount_container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 250px;
+}
+
+.ThemeOptions_options {
+  width: 104px;
+}
+
+.TweetCount_input {
+  width: 100px;
+}

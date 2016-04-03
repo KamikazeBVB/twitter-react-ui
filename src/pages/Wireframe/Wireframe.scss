@@ -1,0 +1,23 @@
+.TitleContainer {
+  display: flex;
+  justify-content: center;
+  background-color: #0084B4;
+}
+
+.Title {
+  font-size: 40px;
+}
+
+.LinkContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.Link {
+  margin-right: 20px;
+}
+
+.AppContainer {
+  display: flex;
+  padding: 10px 10px 0 10px;
+}

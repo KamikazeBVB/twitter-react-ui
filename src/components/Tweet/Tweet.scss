@@ -1,0 +1,45 @@
+.MainContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.MainContainer_row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.CreatedAt {
+  margin: 10px 10px 10px 10px;
+  font-size: 24px;
+}
+
+.TweetText {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.TweetDetails {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 10px;
+  width: 100%;
+}
+
+.TweetDetails_tweeterLink {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.TweetDetails_tweeterRetweets {
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+.TweetDetails_mentionContainer {
+  display: flex;
+  flex-wrap: wrap;
+}

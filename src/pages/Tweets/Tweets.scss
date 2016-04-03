@@ -1,0 +1,54 @@
+.MainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.TitleContainer {
+  border: 1px solid;
+  display: flex;
+  justify-content: center;
+}
+
+.TitleContainer_title {
+  font-size: 36px;
+}
+
+.TweetsContainer {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid;
+  @media (max-width: 700px) {
+    border-bottom: 0;
+  }
+}
+
+.TweetsContainer_row {
+  display: flex;
+  border-bottom: 1px solid;
+  &:last-child {
+    border-bottom: 0;
+  }
+  @media (max-width: 700px) {
+    flex-direction: column;
+    border-bottom: 0;
+  }
+}
+
+.TweetsContainer_column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-left: 1px solid;
+  &:last-child {
+    border-right: 1px solid;
+  }
+
+  @media (max-width: 700px) {
+    border-bottom: 0;
+    border-left: 0;
+    &:last-child {
+      border-right: 0;
+    }
+  }
+}
