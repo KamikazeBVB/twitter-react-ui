@@ -16,7 +16,7 @@ export default class Wireframe extends React.Component {
             <h1 className={style.Title}> Twitter Feeds</h1>
           </div>
           <div className={style.LinkContainer}>
-            <Link className={style.Link} to="/tweets">View tweets</Link>
+            <Link className={style.Link} to="/twitts">View twitts</Link>
             <Link className={style.Link} to="/configuration">Configurate UI</Link>
           </div>
           <div className={style.AppContainer}>

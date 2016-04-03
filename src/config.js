@@ -11,12 +11,12 @@ const environment = {
 
 module.exports = Object.assign({
   port: process.env.PORT || 3000,
-  tweeterBaseProxyUrl: 'http://localhost:7890/1.1/statuses/user_timeline.json?screen_name',
+  twitterBaseProxyUrl: 'http://localhost:7890/1.1/statuses/user_timeline.json?screen_name',
 
   defaultViewConfigurations: {
-    tweetPerColumnCount: 30,
+    twittPerColumnCount: 30,
     websiteTheme: 'Blue'
   },
-  tweeterStorageKey: 'twitterConfigs'
+  twitterStorageKey: 'twitterConfigs'
 
 }, environment);

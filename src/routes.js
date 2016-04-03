@@ -3,7 +3,7 @@ import React from 'react';
 
 import {
   Wireframe,
-  Tweets,
+  Twitts,
   Configuration,
   NotFound
  } from './pages';
@@ -11,8 +11,8 @@ import {
 export default () => {
   return (
       <Route path="/" component={Wireframe}>
-        <IndexRoute component={Tweets} />
-        <Route path="tweets" component={Tweets}/>
+        <IndexRoute component={Twitts} />
+        <Route path="twitts" component={Twitts}/>
         <Route path="configuration" component={Configuration}/>
         <Route path="*" component={NotFound}/>
       </Route>

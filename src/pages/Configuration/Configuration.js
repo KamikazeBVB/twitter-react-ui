@@ -5,9 +5,9 @@ import {writeToLocalStorage, readLocalStorage} from './../../services/Storage';
 export default class Configuration extends React.Component {
 
   componentWillMount() {
-    const currentConfig = readLocalStorage(config.tweeterStorageKey) || config.defaultViewConfigurations;
+    const currentConfig = readLocalStorage(config.twitterStorageKey) || config.defaultViewConfigurations;
 
-    writeToLocalStorage(config.tweeterStorageKey, currentConfig);
+    writeToLocalStorage(config.twitterStorageKey, currentConfig);
   }
 
   render() {
@@ -23,8 +23,8 @@ export default class Configuration extends React.Component {
           </select>
         </div>
         <div className={style.TweetCount_container}>
-          <span> Number of tweets: </span>
-          <input className={style.TweetCount_input} id="tweetPerColumnCount"></input>
+          <span> Number of twitts: </span>
+          <input className={style.TweetCount_input} id="twittPerColumnCount"></input>
         </div>
 
       </div>

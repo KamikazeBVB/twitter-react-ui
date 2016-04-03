@@ -14,7 +14,7 @@
   font-size: 36px;
 }
 
-.TweetsContainer {
+.TwittContainer {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid;
@@ -23,7 +23,7 @@
   }
 }
 
-.TweetsContainer_row {
+.TwittContainer_row {
   display: flex;
   border-bottom: 1px solid;
   &:last-child {
@@ -35,7 +35,7 @@
   }
 }
 
-.TweetsContainer_column {
+.TwittContainer_column {
   display: flex;
   flex-direction: column;
   flex: 1;

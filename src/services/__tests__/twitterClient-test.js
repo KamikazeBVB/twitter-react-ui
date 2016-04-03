@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {getTweets} from './../TweeterClient';
+import {getTweets} from './../TwitterClient';
 
 describe('Helper: Tweeter Client Tests', () => {
   it('Should run the test', () => {

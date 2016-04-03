@@ -1,11 +1,11 @@
 import superagent from 'superagent';
 import config from './../config.js';
 
-const appDirectTweets = callProxy(`${config.tweeterBaseProxyUrl}=appdirect`);
-const techChrunchTweets = callProxy(`${config.tweeterBaseProxyUrl}=techcrunch`);
-const laughingSquidTweets = callProxy(`${config.tweeterBaseProxyUrl}=laughingsquid`);
+const appDirectTwitts = callProxy(`${config.twitterBaseProxyUrl}=appdirect`);
+const techChrunchTwitts = callProxy(`${config.twitterBaseProxyUrl}=techcrunch`);
+const laughingSquidTwitts = callProxy(`${config.twitterBaseProxyUrl}=laughingsquid`);
 
-function buildTweetUrl(tweet) {
+function buildTwittUrl(tweet) {
   return `http://twitter.com/statuses/${tweet.id_str}`;
 }
 
@@ -23,34 +23,34 @@ function callProxy(url) {
   });
 }
 
-function extractRelevantData(rawTweet) {
+function extractRelevantData(rawTwitt) {
   return {
-    createdAt: rawTweet.created_at,
-    url: buildTweetUrl(rawTweet),
-    userMentions: rawTweet.entities.user_mentions
+    createdAt: rawTwitt.created_at,
+    url: buildTwittUrl(rawTwitt),
+    userMentions: rawTwitt.entities.user_mentions
                     .map(item => {return {screenName: item.screen_name};}),
-    content: rawTweet.text,
-    screenName: rawTweet.user.screen_name
+    content: rawTwitt.text,
+    screenName: rawTwitt.user.screen_name
   };
 }
 
-export function getTweets() {
-  return Promise.all([appDirectTweets, techChrunchTweets, laughingSquidTweets])
+export function getTwitts() {
+  return Promise.all([appDirectTwitts, techChrunchTwitts, laughingSquidTwitts])
     .then(tweets => {
       let longestArray = tweets[0].length > tweets[1].length ? tweets[0].length : tweets[1].length;
       longestArray = longestArray > tweets[2].length ? longestArray : tweets[2].length;
 
-      const processedTweets = [];
+      const processedTwitts = [];
 
       for (let index = 0; index < longestArray; index++) {
-        processedTweets.push({
+        processedTwitts.push({
           appDirect: extractRelevantData(tweets[0][index]),
           techCrunch: extractRelevantData(tweets[1][index]),
           laughingSquid: extractRelevantData(tweets[2][index])
         });
       }
 
-      return processedTweets;
+      return processedTwitts;
     })
     .catch(err => { console.log(err); });
 }

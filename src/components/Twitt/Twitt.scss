@@ -16,12 +16,12 @@
   font-size: 24px;
 }
 
-.TweetText {
+.TwittText {
   font-size: 20px;
   padding: 10px;
 }
 
-.TweetDetails {
+.TwittDetails {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
@@ -29,17 +29,17 @@
   width: 100%;
 }
 
-.TweetDetails_tweeterLink {
+.TwittDetails_twitterLink {
   font-size: 16px;
   margin-right: 10px;
 }
 
-.TweetDetails_tweeterRetweets {
+.TwittDetails_twitterRetwitts {
   font-size: 16px;
   margin-right: 5px;
 }
 
-.TweetDetails_mentionContainer {
+.TwittDetails_mentionContainer {
   display: flex;
   flex-wrap: wrap;
 }
