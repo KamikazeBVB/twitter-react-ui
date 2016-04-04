@@ -1,13 +1,46 @@
 import React from 'react';
-import config from './../../config';
 import {writeToLocalStorage, readLocalStorage} from './../../services/Storage';
+import TwitterUser from './../../components/TwitterUser/TwitterUser';
+import config from './../../config';
 
 export default class Configuration extends React.Component {
 
-  componentWillMount() {
-    const currentConfig = readLocalStorage(config.twitterStorageKey) || config.defaultViewConfigurations;
+  constructor(props, context) {
+    super(props, context);
 
-    writeToLocalStorage(config.twitterStorageKey, currentConfig);
+    let currentConfig = readLocalStorage(config.twitterStorageKey);
+    if (!currentConfig) {
+      currentConfig = config.defaultViewConfigurations;
+
+      writeToLocalStorage(config.twitterStorageKey, currentConfig);
+    }
+    this.state = {
+      twittsPerColumnCount: currentConfig.twittsPerColumnCount,
+      websiteTheme: currentConfig.websiteTheme
+    };
+  }
+
+  changeTwittsPerColumnCount(event) {
+    if (event) {
+      const newCount = event.target.value;
+      this.setState({
+        twittsPerColumnCount: newCount
+      });
+    }
+  }
+
+  themeChanged(event) {
+    if (event) {
+      const newTheme = event.target.value === '0' ? 'Blue' : 'Black';
+
+      this.setState({ websiteTheme: newTheme});
+    }
+  }
+
+  saveConfiguration() {
+    const {twittsPerColumnCount, websiteTheme} = this.state;
+
+    writeToLocalStorage(config.twitterStorageKey, {twittsPerColumnCount, websiteTheme} );
   }
 
   render() {
@@ -17,16 +50,25 @@ export default class Configuration extends React.Component {
       <div className={style.MainContainer}>
         <div className={style.ThemeOptions_container}>
           <span> Web-site theme: </span>
-          <select className={style.ThemeOptions_options} id="websiteTheme">
-            <option> Blue Theme</option>
-            <option> Black Theme</option>
+          <select className={style.ThemeOptions_options} id="websiteTheme" onChange={this.themeChanged.bind(this)}>
+            <option value="0"> Blue Theme</option>
+            <option value="1"> Black Theme</option>
           </select>
         </div>
         <div className={style.TweetCount_container}>
           <span> Number of twitts: </span>
-          <input className={style.TweetCount_input} id="twittPerColumnCount"></input>
+          <input className={style.TweetCount_input} id="twittsPerColumnCount"
+            value={this.state.twittsPerColumnCount}
+            onChange={this.changeTwittsPerColumnCount.bind(this)}/>
         </div>
-
+        <div className={style.ColumnOrderContainer}>
+          <TwitterUser twitterUserName="App Direct" />
+          <TwitterUser twitterUserName="Tech Crunch" />
+          <TwitterUser twitterUserName="Laughing Squid" />
+        </div>
+        <button className={style.SaveConfigurationButton} onClick={this.saveConfiguration.bind(this)}>
+          Save Configuration
+        </button>
       </div>
     );
   }
