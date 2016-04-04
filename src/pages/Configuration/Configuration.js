@@ -1,6 +1,6 @@
 import React from 'react';
 import {writeToLocalStorage, readLocalStorage} from './../../services/Storage';
-import TwitterUser from './../../components/TwitterUser/TwitterUser';
+import ColumnOrderPicker from './../../components/ColumnOrderPicker/ColumnOrderPicker';
 import config from './../../config';
 
 export default class Configuration extends React.Component {
@@ -62,9 +62,7 @@ export default class Configuration extends React.Component {
             onChange={this.changeTwittsPerColumnCount.bind(this)}/>
         </div>
         <div className={style.ColumnOrderContainer}>
-          <TwitterUser twitterUserName="App Direct" />
-          <TwitterUser twitterUserName="Tech Crunch" />
-          <TwitterUser twitterUserName="Laughing Squid" />
+          <ColumnOrderPicker/>
         </div>
         <button className={style.SaveConfigurationButton} onClick={this.saveConfiguration.bind(this)}>
           Save Configuration
