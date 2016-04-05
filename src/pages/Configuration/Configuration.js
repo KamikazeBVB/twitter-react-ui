@@ -16,7 +16,8 @@ export default class Configuration extends React.Component {
     }
     this.state = {
       twittsPerColumnCount: currentConfig.twittsPerColumnCount,
-      websiteTheme: currentConfig.websiteTheme
+      websiteTheme: currentConfig.websiteTheme,
+      twitterUserNames: currentConfig.twitterUserNames
     };
   }
 
@@ -38,9 +39,17 @@ export default class Configuration extends React.Component {
   }
 
   saveConfiguration() {
-    const {twittsPerColumnCount, websiteTheme} = this.state;
+    const {
+      twittsPerColumnCount,
+      websiteTheme,
+      twitterUserNames
+    } = this.state;
 
-    writeToLocalStorage(config.twitterStorageKey, {twittsPerColumnCount, websiteTheme} );
+    writeToLocalStorage(config.twitterStorageKey, {
+      twittsPerColumnCount,
+      websiteTheme,
+      twitterUserNames
+    });
   }
 
   render() {

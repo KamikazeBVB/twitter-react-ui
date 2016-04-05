@@ -15,7 +15,8 @@ module.exports = Object.assign({
 
   defaultViewConfigurations: {
     twittsPerColumnCount: 30,
-    websiteTheme: 'Blue'
+    websiteTheme: 'Blue',
+    twitterUserNames: ['appDirect', 'techCrunch', 'laughingSquid']
   },
   twitterStorageKey: 'twitterConfigs'
 

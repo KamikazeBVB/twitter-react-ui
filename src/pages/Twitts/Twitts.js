@@ -1,11 +1,17 @@
 import React from 'react';
 import Twitt from './../../components/Twitt/Twitt';
 import {getTwitts} from './../../services/TwitterClient';
+import {readLocalStorage} from './../../services/Storage';
+import config from './../../config';
 
 export default class Twitts extends React.Component {
+  constructor(props, context) {
+    super(props, context);
 
-  componentWillMount() {
-    getTwitts()
+    const configurations = readLocalStorage(config.twitterStorageKey) ||
+                           config.defaultViewConfigurations;
+
+    getTwitts(configurations)
       .then(result => {
         this.setState({twitts: result});
       });

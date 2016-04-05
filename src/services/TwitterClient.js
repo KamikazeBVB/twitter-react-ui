@@ -1,10 +1,6 @@
 import superagent from 'superagent';
 import config from './../config.js';
 
-const appDirectTwitts = callProxy(`${config.twitterBaseProxyUrl}=appdirect`);
-const techChrunchTwitts = callProxy(`${config.twitterBaseProxyUrl}=techcrunch`);
-const laughingSquidTwitts = callProxy(`${config.twitterBaseProxyUrl}=laughingsquid`);
-
 function buildTwittUrl(tweet) {
   return `http://twitter.com/statuses/${tweet.id_str}`;
 }
@@ -34,8 +30,32 @@ function extractRelevantData(rawTwitt) {
   };
 }
 
-export function getTwitts() {
-  return Promise.all([appDirectTwitts, techChrunchTwitts, laughingSquidTwitts])
+function constructQueryStringParameter(name, value) {
+  return `&${name}=${value}`;
+}
+
+function prepareUrl(userName, requestConfig) {
+  if (!userName) throw new Error('Invalid user name');
+
+  let url = `${config.twitterBaseProxyUrl}=${userName}`;
+
+  if (requestConfig.twittsPerColumnCount) {
+    url = url + constructQueryStringParameter('count', requestConfig.twittsPerColumnCount);
+  }
+
+  return url;
+}
+
+export function getTwitts(requestConfig) {
+  if (!Array.isArray(requestConfig.twitterUserNames)) {
+    throw new Error('You must specify an array of user names');
+  }
+
+  const twitterCalls = requestConfig.twitterUserNames.map((userName) => {
+    return callProxy(prepareUrl(userName, requestConfig));
+  });
+
+  return Promise.all(twitterCalls)
     .then(tweets => {
       let longestArray = tweets[0].length > tweets[1].length ? tweets[0].length : tweets[1].length;
       longestArray = longestArray > tweets[2].length ? longestArray : tweets[2].length;
