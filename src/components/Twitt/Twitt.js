@@ -2,11 +2,14 @@ import React, {PropTypes} from 'react';
 
 export default class Twitt extends React.Component {
   static propTypes = {
-    twittContent: PropTypes.object.isRequired
+    twittContent: PropTypes.object.isRequired,
+    theme: PropTypes.string
   }
 
   render() {
-    const style = require('./Twitt.scss');
+    const styleRefernce = this.props.theme === 'Black' ? '_blackTheme' : '';
+    const style = require(`./Twitt${styleRefernce}.scss`);
+    console.log('aaa', styleRefernce);
     const twitt = this.props.twittContent;
 
     const renderMentions = (item, index) => {

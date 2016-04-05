@@ -5,9 +5,7 @@ import config from './../../config';
 
 export default class Configuration extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
-
+  componentWillMount() {
     let currentConfig = readLocalStorage(config.twitterStorageKey);
     if (!currentConfig) {
       currentConfig = config.defaultViewConfigurations;
@@ -31,11 +29,10 @@ export default class Configuration extends React.Component {
   }
 
   themeChanged(event) {
-    if (event) {
-      const newTheme = event.target.value === '0' ? 'Blue' : 'Black';
+    if (!event) return;
+    const newTheme = event.target.value;
 
-      this.setState({ websiteTheme: newTheme});
-    }
+    this.setState({ websiteTheme: newTheme});
   }
 
   saveConfiguration() {
@@ -59,9 +56,12 @@ export default class Configuration extends React.Component {
       <div className={style.MainContainer}>
         <div className={style.ThemeOptions_container}>
           <span> Web-site theme: </span>
-          <select className={style.ThemeOptions_options} id="websiteTheme" onChange={this.themeChanged.bind(this)}>
-            <option value="0"> Blue Theme</option>
-            <option value="1"> Black Theme</option>
+          <select className={style.ThemeOptions_options}
+              id="websiteTheme"
+              onChange={this.themeChanged.bind(this)}
+              value={this.state.websiteTheme}>
+            <option value="Blue"> Blue Theme</option>
+            <option value="Black"> Black Theme</option>
           </select>
         </div>
         <div className={style.TweetCount_container}>

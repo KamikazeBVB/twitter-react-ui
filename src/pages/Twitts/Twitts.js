@@ -16,10 +16,10 @@ export default class Twitts extends React.Component {
       });
   }
 
-  renderTwitt(value, style) {
+  renderTwitt(value, style, theme) {
     return (
       <div className={style.TwittContainer_column}>
-        {value ? <Twitt twittContent={value}/> : <span/>}
+        {value ? <Twitt twittContent={value} theme={theme}/> : <span/>}
       </div>
     );
   }
@@ -30,22 +30,21 @@ export default class Twitts extends React.Component {
         <div/>
       );
     }
+    const configs = this.state.configurations;
 
-    const style = require('./Twitts.scss');
-
-    const twitterUserNames = this.state.configurations.twitterUserNames;
-
+    const styleRefernce = configs.websiteTheme === 'Black' ? '_blackTheme' : '';
+    const style = require(`./Twitts${styleRefernce}.scss`);
 
     const listItem = (twitt, index) => {
-      const twittOrder = twitterUserNames.map((userName) => {
+      const twittOrder = configs.twitterUserNames.map((userName) => {
         return Object.getOwnPropertyDescriptor(twitt, userName).value;
       });
 
       return (
         <div key={index} className={style.TwittContainer_row}>
-          {this.renderTwitt(twittOrder[0], style)}
-          {this.renderTwitt(twittOrder[1], style)}
-          {this.renderTwitt(twittOrder[2], style)}
+          {this.renderTwitt(twittOrder[0], style, configs.websiteTheme)}
+          {this.renderTwitt(twittOrder[1], style, configs.websiteTheme)}
+          {this.renderTwitt(twittOrder[2], style, configs.websiteTheme)}
         </div>
       );
     };

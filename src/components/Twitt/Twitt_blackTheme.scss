@@ -14,15 +14,12 @@
 .CreatedAt {
   margin: 10px 10px 10px 10px;
   font-size: 24px;
+  color: #0084B4;
 }
 
 .TwittText {
   font-size: 20px;
   padding: 10px;
-}
-
-.TwittText_blackTheme {
-  @extend .TwittText;
   color: #0084B4;
 }
 
@@ -42,6 +39,7 @@
 .TwittDetails_twitterRetwitts {
   font-size: 16px;
   margin-right: 5px;
+  color: #0084B4;
 }
 
 .TwittDetails_mentionContainer {
