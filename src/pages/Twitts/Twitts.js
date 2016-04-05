@@ -5,33 +5,47 @@ import {readLocalStorage} from './../../services/Storage';
 import config from './../../config';
 
 export default class Twitts extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
+  componentWillMount() {
     const configurations = readLocalStorage(config.twitterStorageKey) ||
                            config.defaultViewConfigurations;
+    this.setState({isLoading: true});
 
     getTwitts(configurations)
       .then(result => {
-        this.setState({twitts: result});
+        this.setState({twitts: result, configurations, isLoading: false});
       });
   }
 
+  renderTwitt(value, style) {
+    return (
+      <div className={style.TwittContainer_column}>
+        {value ? <Twitt twittContent={value}/> : <span/>}
+      </div>
+    );
+  }
+
   render() {
+    if (!this.state || this.state.isLoading) {
+      return (
+        <div/>
+      );
+    }
+
     const style = require('./Twitts.scss');
 
+    const twitterUserNames = this.state.configurations.twitterUserNames;
+
+
     const listItem = (twitt, index) => {
+      const twittOrder = twitterUserNames.map((userName) => {
+        return Object.getOwnPropertyDescriptor(twitt, userName).value;
+      });
+
       return (
         <div key={index} className={style.TwittContainer_row}>
-          <div className={style.TwittContainer_column}>
-            {twitt.appDirect ? <Twitt twittContent={twitt.appDirect}/> : <span/>}
-          </div>
-          <div className={style.TwittContainer_column}>
-            {twitt.techCrunch ? <Twitt twittContent={twitt.techCrunch}/> : <span/>}
-          </div>
-          <div className={style.TwittContainer_column}>
-            {twitt.laughingSquid ? <Twitt twittContent={twitt.laughingSquid}/> : <span/>}
-          </div>
+          {this.renderTwitt(twittOrder[0], style)}
+          {this.renderTwitt(twittOrder[1], style)}
+          {this.renderTwitt(twittOrder[2], style)}
         </div>
       );
     };
