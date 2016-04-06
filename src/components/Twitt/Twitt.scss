@@ -21,11 +21,6 @@
   padding: 10px;
 }
 
-.TwittText_blackTheme {
-  @extend .TwittText;
-  color: #0084B4;
-}
-
 .TwittDetails {
   display: flex;
   justify-content: flex-start;

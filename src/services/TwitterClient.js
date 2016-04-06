@@ -46,6 +46,14 @@ function prepareUrl(userName, requestConfig) {
   return url;
 }
 
+function constructUserToTwittMapping(userNames, twitt, index) {
+  const newObject = {};
+  newObject[userNames[0]] = extractRelevantData(twitt[0][index]);
+  newObject[userNames[1]] = extractRelevantData(twitt[1][index]);
+  newObject[userNames[2]] = extractRelevantData(twitt[2][index]);
+  return newObject;
+}
+
 export function getTwitts(requestConfig) {
   if (!Array.isArray(requestConfig.twitterUserNames)) {
     throw new Error('You must specify an array of user names');
@@ -56,18 +64,16 @@ export function getTwitts(requestConfig) {
   });
 
   return Promise.all(twitterCalls)
-    .then(tweets => {
-      let longestArray = tweets[0].length > tweets[1].length ? tweets[0].length : tweets[1].length;
-      longestArray = longestArray > tweets[2].length ? longestArray : tweets[2].length;
+    .then(twitts => {
+      let longestArray = twitts[0].length > twitts[1].length ? twitts[0].length : twitts[1].length;
+      longestArray = longestArray > twitts[2].length ? longestArray : twitts[2].length;
 
       const processedTwitts = [];
 
       for (let index = 0; index < longestArray; index++) {
-        processedTwitts.push({
-          appDirect: extractRelevantData(tweets[0][index]),
-          techCrunch: extractRelevantData(tweets[1][index]),
-          laughingSquid: extractRelevantData(tweets[2][index])
-        });
+        processedTwitts.push(
+          constructUserToTwittMapping(requestConfig.twitterUserNames, twitts, index)
+        );
       }
 
       return processedTwitts;

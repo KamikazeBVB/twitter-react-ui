@@ -9,7 +9,7 @@ export default class Twitt extends React.Component {
   render() {
     const styleRefernce = this.props.theme === 'Black' ? '_blackTheme' : '';
     const style = require(`./Twitt${styleRefernce}.scss`);
-    console.log('aaa', styleRefernce);
+
     const twitt = this.props.twittContent;
 
     const renderMentions = (item, index) => {

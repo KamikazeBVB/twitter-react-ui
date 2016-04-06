@@ -12,11 +12,11 @@ export default class Configuration extends React.Component {
 
       writeToLocalStorage(config.twitterStorageKey, currentConfig);
     }
-    this.state = {
+    this.setState({
       twittsPerColumnCount: currentConfig.twittsPerColumnCount,
       websiteTheme: currentConfig.websiteTheme,
       twitterUserNames: currentConfig.twitterUserNames
-    };
+    });
   }
 
   changeTwittsPerColumnCount(event) {
@@ -26,6 +26,10 @@ export default class Configuration extends React.Component {
         twittsPerColumnCount: newCount
       });
     }
+  }
+
+  changeColumnOrder(twitterUserNames) {
+    this.setState({twitterUserNames});
   }
 
   themeChanged(event) {
@@ -71,7 +75,10 @@ export default class Configuration extends React.Component {
             onChange={this.changeTwittsPerColumnCount.bind(this)}/>
         </div>
         <div className={style.ColumnOrderContainer}>
-          <ColumnOrderPicker/>
+          <label> Please select new positions for the columns! </label>
+          <ColumnOrderPicker
+            onColumnOrderChanged={this.changeColumnOrder.bind(this)}
+            twitterUserNames={this.state.twitterUserNames}/>
         </div>
         <button className={style.SaveConfigurationButton} onClick={this.saveConfiguration.bind(this)}>
           Save Configuration

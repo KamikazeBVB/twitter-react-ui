@@ -1,37 +1,30 @@
 import React, {PropTypes} from 'react';
-import { ItemTypes } from './../../constants';
-import { DragSource } from 'react-dnd';
 
-const dragSource = DragSource;
-
-const twitterUserSource = {
-  beginDrag() {
-    return {};
-  }
-};
-
-function collect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
-  };
-}
-
-@dragSource(ItemTypes.TWITTERUSER, twitterUserSource, collect)
 export default class TwitterUser extends React.Component {
   static propTypes = {
     twitterUserName: PropTypes.string.isRequired,
-    connectDragSource: PropTypes.func.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    onClick: PropTypes.func
+  }
+
+  handleClick() {
+    if (this.props.onClick) {
+      this.props.onClick(this.props.twitterUserName);
+    }
   }
 
   render() {
     const style = require('./TwitterUser.scss');
-    const { connectDragSource } = this.props;
 
-    return connectDragSource(
-      <div className={style.TwitterUser}>
-        @{this.props.twitterUserName}
+    const mainDivStyle = this.props.isSelected ?
+                            style.TwitterUser_selected : style.TwitterUser;
+    return (
+      <div className={mainDivStyle}>
+        <span onClick={this.handleClick.bind(this)}>
+          @{this.props.twitterUserName}
+        </span>
       </div>
     );
   }
 }
+
