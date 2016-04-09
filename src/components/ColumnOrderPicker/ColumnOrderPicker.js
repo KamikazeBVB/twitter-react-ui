@@ -1,6 +1,11 @@
 import React, {PropTypes} from 'react';
+import { DragDropContext } from 'react-dnd';
 import TwitterUser from './../TwitterUser/TwitterUser';
+import HTML5Backend from 'react-dnd-html5-backend';
 
+const dragDropContext = DragDropContext;
+
+@dragDropContext(HTML5Backend)
 export default class ColumnOrderPicker extends React.Component {
   static propTypes = {
     twitterUserNames: PropTypes.array.isRequired,
