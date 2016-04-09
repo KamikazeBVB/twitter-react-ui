@@ -8,17 +8,31 @@ const dropTarget = DropTarget;
 
 const twitterUserSource = {
   beginDrag(props) {
-    props.onClick(props.twitterUserName);
+    if (props.onDragBegin) {
+      props.onDragBegin(props.twitterUserName, true);
+    }
+
     return {
       twitterUserName: props.twitterUserName
     };
   },
+  endDrag(props) {
+    if (props.onDragEnd) {
+      props.onDragEnd(props.twitterUserName);
+    }
+
+    return {
+      twitterUserName: props.twitterUserName
+    };
+  }
 };
 
 const twitterUserTarget = {
   drop(props, monitor) {
-    console.log('dropped', props.twitterUserName);
-    console.log('monitor.dropped', monitor.getItem());
+    if (props.onDrop) {
+      props.onDrop(props.twitterUserName,
+                    monitor.getItem().twitterUserName);
+    }
   }
 };
 
@@ -40,15 +54,11 @@ export default class TwitterUser extends React.Component {
   static propTypes = {
     twitterUserName: PropTypes.string.isRequired,
     isSelected: PropTypes.bool.isRequired,
-    onClick: PropTypes.func,
+    onDragBegin: PropTypes.func,
+    onDragEnd: PropTypes.func,
+    onDrop: PropTypes.func,
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
-  }
-
-  handleClick() {
-    if (this.props.onClick) {
-      this.props.onClick(this.props.twitterUserName);
-    }
   }
 
   render() {
@@ -58,7 +68,7 @@ export default class TwitterUser extends React.Component {
                             style.TwitterUser_selected : style.TwitterUser;
     return connectDropTarget(connectDragSource(
       <div className={mainDivStyle}>
-        <span onClick={this.handleClick.bind(this)}>
+        <span>
           @{this.props.twitterUserName}
         </span>
       </div>

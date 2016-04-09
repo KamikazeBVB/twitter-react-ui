@@ -26,17 +26,33 @@ export default class ColumnOrderPicker extends React.Component {
       );
   }
 
-  swapUsers(users, selectedUser, otherSelectedUser) {
-    const auxIndex = selectedUser.index;
+  swapUsers(firstUserName, secondUserName) {
+    let users = this.state.users;
 
-    selectedUser.index = otherSelectedUser.index;
-    otherSelectedUser.index = auxIndex;
+    const firstUser = users.find(user => {
+      return user.userName === firstUserName;
+    });
 
-    return users.sort((first, second) => {
+    const secondUser = users.find(user => {
+      return user.userName === secondUserName;
+    });
+
+    const auxIndex = firstUser.index;
+
+    firstUser.index = secondUser.index;
+    secondUser.index = auxIndex;
+
+    firstUser.isSelected = false;
+    secondUser.isSelected = false;
+
+    users = users.sort((first, second) => {
       if (first.index > second.index) return 1;
       if (first.index < second.index) return -1;
       return 0;
     });
+
+    this.setState({users});
+    this.handleColumnOrderChanged();
   }
 
   handleColumnOrderChanged() {
@@ -49,26 +65,15 @@ export default class ColumnOrderPicker extends React.Component {
     }
   }
 
-  handleUserSelected(userName) {
-    let users = this.state.users;
+  handleUserDrag(userName, isDragBegin) {
+    const users = this.state.users;
 
-    const selectedUser = users.find(user => {
+    const draggedUser = users.find(user => {
       return user.userName === userName;
     });
 
-    if (selectedUser.isSelected) {
-      selectedUser.isSelected = !selectedUser.isSelected;
-    } else {
-      const otherSelectedUser = users.find(user => {
-        return user.isSelected === true;
-      });
-      if (!otherSelectedUser) {
-        selectedUser.isSelected = true;
-      } else {
-        users = this.swapUsers(users, selectedUser, otherSelectedUser);
-        otherSelectedUser.isSelected = false;
-        this.handleColumnOrderChanged();
-      }
+    if (draggedUser) {
+      draggedUser.isSelected = isDragBegin === true;
     }
 
     this.setState({users});
@@ -82,7 +87,9 @@ export default class ColumnOrderPicker extends React.Component {
         <TwitterUser key={index}
           twitterUserName={user.userName}
           isSelected={user.isSelected}
-          onClick={this.handleUserSelected.bind(this)} />
+          onDragBegin={this.handleUserDrag.bind(this)}
+          onDragEnd={this.handleUserDrag.bind(this)}
+          onDrop={this.swapUsers.bind(this)} />
       );
     };
 
