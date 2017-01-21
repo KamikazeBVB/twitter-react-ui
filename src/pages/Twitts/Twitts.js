@@ -3,6 +3,7 @@ import Twitt from './../../components/Twitt/Twitt';
 import {getTwitts} from './../../services/TwitterClient';
 import {readLocalStorage} from './../../services/Storage';
 import config from './../../config';
+import {max, range} from 'lodash';
 
 export default class Twitts extends React.Component {
   componentWillMount() {
@@ -24,30 +25,37 @@ export default class Twitts extends React.Component {
     );
   }
 
+  renderRowContainer(twits, index, style, theme) {
+    return (
+      <div key={index} className={style.TwittContainer_row}>
+        {this.renderRow(twits, index, style, theme)}
+      </div>
+    );
+  }
+
+  renderRow(twits, index, style, theme) {
+    return this.state.configurations.twitterUserNames.map((userName) => {
+      return this.renderTwitt(twits[userName][index], style, theme);
+    });
+  }
+
   render() {
     if (!this.state || this.state.isLoading) {
       return (
         <div/>
       );
     }
-    const configs = this.state.configurations;
-
-    const styleRefernce = configs.websiteTheme === 'Black' ? '_blackTheme' : '';
+    console.log(this.state.twitts);
+    const styleRefernce = this.state.configurations.websiteTheme === 'Black' ? '_blackTheme' : '';
     const style = require(`./Twitts${styleRefernce}.scss`);
 
-    const listItem = (twitt, index) => {
-      const twittOrder = configs.twitterUserNames.map((userName) => {
-        return Object.getOwnPropertyDescriptor(twitt, userName).value;
-      });
+    const twitArray = Object.values(this.state.twitts);
 
-      return (
-        <div key={index} className={style.TwittContainer_row}>
-          {this.renderTwitt(twittOrder[0], style, configs.websiteTheme)}
-          {this.renderTwitt(twittOrder[1], style, configs.websiteTheme)}
-          {this.renderTwitt(twittOrder[2], style, configs.websiteTheme)}
-        </div>
-      );
-    };
+    const largestLength = max(twitArray.map((array) => array.length));
+
+    const rows = range(largestLength).map((rowNumber) => {
+      return this.renderRowContainer(this.state.twitts, rowNumber, style, this.state.configurations.websiteTheme);
+    });
 
     return (
       <div className={style.MainContainer}>
@@ -55,7 +63,7 @@ export default class Twitts extends React.Component {
           <h1 className={style.TitleContainer_title}>Recent twitts</h1>
         </div>
         <div className={style.TwittContainer}>
-          {this.state.twitts.map(listItem)}
+          {rows}
         </div>
       </div>
     );
